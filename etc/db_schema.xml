@@ -8,7 +8,7 @@
 
         <column xsi:type="varchar" name="area" length="32" nullable="true" comment="Area (frontend/adminhtml/webapi_rest/etc)"/>
         <column xsi:type="varchar" name="full_action_name" length="255" nullable="true" comment="Full Action Name"/>
-        <column xsi:type="varchar" name="request_uri" length="2048" nullable="true" comment="Request URI"/>
+        <column xsi:type="varchar" name="request_uri" length="1024" nullable="true" comment="Request URI"/>
         <column xsi:type="varchar" name="http_method" length="16" nullable="true" comment="HTTP Method"/>
         <column xsi:type="varchar" name="remote_ip" length="64" nullable="true" comment="Remote IP"/>
 
@@ -27,7 +27,7 @@
 
         <column xsi:type="varchar" name="payment_method" length="128" nullable="true" comment="Payment Method Code"/>
         <column xsi:type="varchar" name="event_type" length="64" nullable="false" comment="Event Type"/>
-        <column xsi:type="varchar" name="redirect_to" length="2048" nullable="true" comment="Redirect Target"/>
+        <column xsi:type="varchar" name="redirect_to" length="1024" nullable="true" comment="Redirect Target"/>
 
         <column xsi:type="text" name="context_json" nullable="true" comment="Context JSON"/>
 
