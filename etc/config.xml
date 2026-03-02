@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/config.xsd">
+    <default>
+        <merlin_checkoutprobe>
+            <general>
+                <enabled>0</enabled>
+                <retain_days>7</retain_days>
+                <log_body_max>4096</log_body_max>
+            </general>
+        </merlin_checkoutprobe>
+    </default>
+</config>
