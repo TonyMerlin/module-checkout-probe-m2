@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Log redirects to cart/success etc -->
+    <type name="Magento\Framework\App\Response\Http">
+        <plugin name="merlin_checkoutprobe_redirect_logger"
+                type="Merlin\CheckoutProbe\Plugin\Response\RedirectLogger"/>
+    </type>
+
+    <!-- Catch exceptions during dispatch -->
+    <type name="Magento\Framework\App\FrontController">
+        <plugin name="merlin_checkoutprobe_frontcontroller_exception_logger"
+                type="Merlin\CheckoutProbe\Plugin\App\FrontControllerExceptionLogger"/>
+    </type>
+
+</config>
