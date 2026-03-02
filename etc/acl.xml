@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<acl xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <resources>
+        <resource id="Magento_Backend::admin">
+            <resource id="Magento_Backend::stores">
+                <resource id="Magento_Config::config">
+                    <resource id="Merlin_CheckoutProbe::config" title="Merlin Checkout Probe Config" sortOrder="999"/>
+                </resource>
+            </resource>
+        </resource>
+    </resources>
+</acl>
