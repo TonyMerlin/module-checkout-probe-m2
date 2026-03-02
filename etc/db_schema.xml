@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table name="merlin_checkoutprobe_event" resource="default" engine="innodb" comment="Merlin Checkout Probe Events">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+
+        <column xsi:type="varchar" name="area" length="32" nullable="true" comment="Area (frontend/adminhtml/webapi_rest/etc)"/>
+        <column xsi:type="varchar" name="full_action_name" length="255" nullable="true" comment="Full Action Name"/>
+        <column xsi:type="varchar" name="request_uri" length="2048" nullable="true" comment="Request URI"/>
+        <column xsi:type="varchar" name="http_method" length="16" nullable="true" comment="HTTP Method"/>
+        <column xsi:type="varchar" name="remote_ip" length="64" nullable="true" comment="Remote IP"/>
+
+        <column xsi:type="varchar" name="php_session_id" length="128" nullable="true" comment="PHP Session ID"/>
+        <column xsi:type="varchar" name="mage_cache_sid" length="128" nullable="true" comment="MAGE_CACHE_SID"/>
+        <column xsi:type="varchar" name="private_content_version" length="64" nullable="true" comment="private_content_version"/>
+
+        <column xsi:type="int" name="quote_id" unsigned="true" nullable="true" comment="Quote ID"/>
+        <column xsi:type="varchar" name="masked_quote_id" length="64" nullable="true" comment="Masked Quote ID"/>
+        <column xsi:type="varchar" name="reserved_order_id" length="64" nullable="true" comment="Reserved Order Increment ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="true" comment="Customer ID"/>
+
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="true" comment="Order Entity ID"/>
+        <column xsi:type="varchar" name="order_increment_id" length="64" nullable="true" comment="Order Increment ID"/>
+        <column xsi:type="varchar" name="last_real_order_id" length="64" nullable="true" comment="Checkout Session last_real_order_id"/>
+
+        <column xsi:type="varchar" name="payment_method" length="128" nullable="true" comment="Payment Method Code"/>
+        <column xsi:type="varchar" name="event_type" length="64" nullable="false" comment="Event Type"/>
+        <column xsi:type="varchar" name="redirect_to" length="2048" nullable="true" comment="Redirect Target"/>
+
+        <column xsi:type="text" name="context_json" nullable="true" comment="Context JSON"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+
+        <index referenceId="MERLIN_COPROBE_FULLACTION" indexType="btree">
+            <column name="full_action_name"/>
+            <column name="created_at"/>
+        </index>
+
+        <index referenceId="MERLIN_COPROBE_QUOTE" indexType="btree">
+            <column name="quote_id"/>
+            <column name="created_at"/>
+        </index>
+
+        <index referenceId="MERLIN_COPROBE_ORDER" indexType="btree">
+            <column name="order_id"/>
+            <column name="created_at"/>
+        </index>
+
+    </table>
+</schema>
