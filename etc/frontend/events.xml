@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="controller_action_predispatch">
+        <observer name="merlin_checkoutprobe_predispatch" instance="Merlin\CheckoutProbe\Observer\Predispatch"/>
+    </event>
+
+    <event name="controller_action_postdispatch">
+        <observer name="merlin_checkoutprobe_postdispatch" instance="Merlin\CheckoutProbe\Observer\Postdispatch"/>
+    </event>
+
+    <event name="checkout_submit_all_after">
+        <observer name="merlin_checkoutprobe_checkout_submit_all_after" instance="Merlin\CheckoutProbe\Observer\CheckoutSubmitAllAfter"/>
+    </event>
+
+    <event name="sales_order_place_after">
+        <observer name="merlin_checkoutprobe_sales_order_place_after" instance="Merlin\CheckoutProbe\Observer\SalesOrderPlaceAfter"/>
+    </event>
+</config>
