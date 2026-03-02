@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="merlin_checkoutprobe" translate="label" sortOrder="900" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Merlin Checkout Probe</label>
+            <tab>general</tab>
+            <resource>Merlin_CheckoutProbe::config</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>General</label>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="retain_days" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Retention (days)</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <comment>Used by CLI purge command.</comment>
+                </field>
+
+                <field id="log_body_max" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Max request body bytes to capture</label>
+                    <validate>validate-number</validate>
+                    <comment>Applies to POST bodies (form/json). Default 4096 recommended.</comment>
+                </field>
+
+            </group>
+        </section>
+    </system>
+</config>
