@@ -28,8 +28,14 @@ class DisableCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try { $this->state->setAreaCode('adminhtml'); } catch (\Throwable) {}
-        $this->writer->save('merlin_checkoutprobe/general/enabled', '0', ScopeInterface::SCOPE_DEFAULT, 0);
+
+        $this->writer->save(
+            'merlin_checkoutprobe/general/enabled',
+            '0', 
+            \Magento\Framework\App\Config\ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 
+            0
+    );
         $output->writeln('<info>Disabled.</info>');
-        return Command::SUCCESS;
+        return 0;
     }
 }
