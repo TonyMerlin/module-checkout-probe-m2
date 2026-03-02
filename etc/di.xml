@@ -15,13 +15,14 @@
     </type>
 
     <!-- Commands -->
-<type name="Symfony\Component\Console\Application">
-    <arguments>
-        <argument name="commands" xsi:type="array">
-            <item name="merlin_checkoutprobe_enable" xsi:type="object">Merlin\CheckoutProbe\Console\Command\EnableCommand</item>
-            <item name="merlin_checkoutprobe_disable" xsi:type="object">Merlin\CheckoutProbe\Console\Command\DisableCommand</item>
-            <item name="merlin_checkoutprobe_purge" xsi:type="object">Merlin\CheckoutProbe\Console\Command\PurgeCommand</item>
-        </argument>
-    </arguments>
-</type>
+    
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="merlin_checkoutprobe_enable" xsi:type="object">Merlin\CheckoutProbe\Console\Command\EnableCommand</item>
+                <item name="merlin_checkoutprobe_disable" xsi:type="object">Merlin\CheckoutProbe\Console\Command\DisableCommand</item>
+                <item name="merlin_checkoutprobe_purge" xsi:type="object">Merlin\CheckoutProbe\Console\Command\PurgeCommand</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
