@@ -1,8 +1,5 @@
 ## Install / Enable
 
-cd < magentoroot >
-
-
 bin/magento module:enable Merlin_CheckoutProbe
 bin/magento setup:upgrade
 bin/magento cache:flush
