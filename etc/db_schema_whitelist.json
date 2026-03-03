@@ -1,0 +1,35 @@
+{
+    "merlin_checkoutprobe_event": {
+        "column": {
+            "entity_id": true,
+            "created_at": true,
+            "area": true,
+            "full_action_name": true,
+            "request_uri": true,
+            "http_method": true,
+            "remote_ip": true,
+            "php_session_id": true,
+            "mage_cache_sid": true,
+            "private_content_version": true,
+            "quote_id": true,
+            "masked_quote_id": true,
+            "reserved_order_id": true,
+            "customer_id": true,
+            "order_id": true,
+            "order_increment_id": true,
+            "last_real_order_id": true,
+            "payment_method": true,
+            "event_type": true,
+            "redirect_to": true,
+            "context_json": true
+        },
+        "index": {
+            "MERLIN_CHECKOUTPROBE_EVENT_FULL_ACTION_NAME_CREATED_AT": true,
+            "MERLIN_CHECKOUTPROBE_EVENT_QUOTE_ID_CREATED_AT": true,
+            "MERLIN_CHECKOUTPROBE_EVENT_ORDER_ID_CREATED_AT": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
