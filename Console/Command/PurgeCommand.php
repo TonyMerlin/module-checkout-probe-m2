@@ -38,6 +38,6 @@ class PurgeCommand extends Command
         $affected = $conn->query($sql)->rowCount();
 
         $output->writeln("<info>Purged {$affected} rows older than {$days} days.</info>");
-        return Command::SUCCESS;
+        return 0;
     }
 }
