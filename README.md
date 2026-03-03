@@ -1,6 +1,6 @@
 ## Install / Enable
 
-cd /<magentoroot>/
+cd < magentoroot >
 
 
 bin/magento module:enable Merlin_CheckoutProbe
