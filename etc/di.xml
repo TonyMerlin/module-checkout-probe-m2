@@ -5,17 +5,18 @@
     <!-- Log redirects to cart/success etc -->
     <type name="Magento\Framework\App\Response\Http">
         <plugin name="merlin_checkoutprobe_redirect_logger"
-                type="Merlin\CheckoutProbe\Plugin\Response\RedirectLogger"/>
+                type="Merlin\CheckoutProbe\Plugin\Response\RedirectLogger"
+                sortOrder="10"/>
     </type>
 
     <!-- Catch exceptions during dispatch -->
-    <type name="Magento\Framework\App\FrontController">
+    <type name="Magento\Framework\App\FrontControllerInterface">
         <plugin name="merlin_checkoutprobe_frontcontroller_exception_logger"
-                type="Merlin\CheckoutProbe\Plugin\App\FrontControllerExceptionLogger"/>
+                type="Merlin\CheckoutProbe\Plugin\App\FrontControllerExceptionLogger"
+                sortOrder="10"/>
     </type>
 
     <!-- Commands -->
-    
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
@@ -25,4 +26,5 @@
             </argument>
         </arguments>
     </type>
+
 </config>
