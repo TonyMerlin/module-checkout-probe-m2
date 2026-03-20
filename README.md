@@ -1,11 +1,10 @@
 ## Install / Enable
 
+cd /var/www/vhosts/autoupsells.theappliancedepot.co.uk/htdocs
+
+
 bin/magento module:enable Merlin_CheckoutProbe
-
-
 bin/magento setup:upgrade
-
-
 bin/magento cache:flush
 
 
