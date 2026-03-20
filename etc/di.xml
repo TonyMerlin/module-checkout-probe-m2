@@ -10,7 +10,7 @@
     </type>
 
     <!-- Catch exceptions during dispatch -->
-    <type name="Magento\Framework\App\FrontControllerInterface">
+    <type name="Magento\Framework\App\FrontController">
         <plugin name="merlin_checkoutprobe_frontcontroller_exception_logger"
                 type="Merlin\CheckoutProbe\Plugin\App\FrontControllerExceptionLogger"
                 sortOrder="10"/>
@@ -23,6 +23,7 @@
                 <item name="merlin_checkoutprobe_enable" xsi:type="object">Merlin\CheckoutProbe\Console\Command\EnableCommand</item>
                 <item name="merlin_checkoutprobe_disable" xsi:type="object">Merlin\CheckoutProbe\Console\Command\DisableCommand</item>
                 <item name="merlin_checkoutprobe_purge" xsi:type="object">Merlin\CheckoutProbe\Console\Command\PurgeCommand</item>
+                <item name="merlin_checkoutprobe_report" xsi:type="object">Merlin\CheckoutProbe\Console\Command\ReportCommand</item>
             </argument>
         </arguments>
     </type>
