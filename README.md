@@ -1,5 +1,8 @@
 # Merlin_CheckoutProbe
 
+## V1.0.3 Fixed Extension
+Fixed extension, added easier command line reporting, and checks for more log files 
+
 ## Overview
 
 `Merlin_CheckoutProbe` is a Magento 2 diagnostic module built to trace and investigate intermittent checkout failures, with a particular focus on Klarna checkout issues such as:
