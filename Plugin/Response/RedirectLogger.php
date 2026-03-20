@@ -14,42 +14,23 @@ class RedirectLogger
     public function __construct(
         private readonly Config $config,
         private readonly RequestInterface $request,
-        private readonly ContextCollector $collector,
-        private readonly EventWriter $writer
+        private readonly ContextCollector $contextCollector,
+        private readonly EventWriter $eventWriter
     ) {}
 
-    public function beforeSetRedirect(ResponseHttp $subject, $url, $code = 302): array
+    public function afterSetRedirect(ResponseHttp $subject, ResponseHttp $result, $url, $code = 302): ResponseHttp
     {
         if (!$this->config->isEnabled()) {
-            return [$url, $code];
+            return $result;
         }
 
-        $ctx = $this->collector->collect($this->request);
+        $ctx = $this->contextCollector->collect($this->request);
 
-        // Only log interesting redirects (cart, checkout, success) to reduce noise
-        $u = (string)$url;
-        $interesting = (stripos($u, '/checkout/cart') !== false)
-            || (stripos($u, '/checkout') !== false)
-            || (stripos($u, '/onepage/success') !== false);
+        $this->eventWriter->write('redirect', $ctx + [
+            'to'   => (string) $url,
+            'code' => (int) $code,
+        ], 'info');
 
-        if ($interesting) {
-            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 25);
-            $stack = [];
-            foreach ($bt as $frame) {
-                if (!isset($frame['file'])) continue;
-                $stack[] = ($frame['file'] ?? '') . ':' . ($frame['line'] ?? '');
-            }
-
-            $this->writer->write([
-                'event_type' => 'redirect',
-                'redirect_to' => $u,
-                'context_json' => [
-                    'http_code' => $code,
-                    'stack' => $stack,
-                ],
-            ] + $ctx);
-        }
-
-        return [$url, $code];
+        return $result;
     }
 }
