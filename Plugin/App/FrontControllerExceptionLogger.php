@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Merlin\CheckoutProbe\Plugin\App;
 
-use Magento\Framework\App\FrontControllerInterface;
+use Magento\Framework\App\FrontController;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
@@ -14,47 +14,52 @@ use Psr\Log\LoggerInterface;
 
 class FrontControllerExceptionLogger
 {
+    private ResponseInterface $response;
+
     public function __construct(
         private readonly Config $config,
         private readonly ContextCollector $contextCollector,
         private readonly EventWriter $eventWriter,
         private readonly LoggerInterface $logger,
-        private readonly ResponseInterface $response
-    ) {}
+        ?ResponseInterface $response = null
+    ) {
+        $this->response = $response
+            ?? \Magento\Framework\App\ObjectManager::getInstance()->get(ResponseInterface::class);
+    }
 
     public function aroundDispatch(
-        FrontControllerInterface $subject,
+        FrontController $subject,
         \Closure $proceed,
         RequestInterface $request
     ): ResponseInterface {
-        $result = null;
-
         try {
             $result = $proceed($request);
 
-            if ($this->config->isEnabled()) {
-                // Optional: record a lightweight “dispatch ok” event
-                // $this->eventWriter->write('dispatch_ok', $this->contextCollector->collect($request));
+            if ($this->config->isEnabled() && $this->shouldProbePath((string)$request->getPathInfo())) {
+                try {
+                    $this->eventWriter->write('dispatch_ok', $this->contextCollector->collect($request));
+                } catch (\Throwable $ignored) {
+                }
             }
 
             return $this->normalizeToResponse($result);
         } catch (\Throwable $e) {
             if ($this->config->isEnabled()) {
-                $ctx = $this->contextCollector->collect($request);
+                try {
+                    $ctx = $this->contextCollector->collect($request);
+                    $ctx['exception_class'] = get_class($e);
+                    $ctx['message'] = $e->getMessage();
+                    $ctx['path'] = (string)$request->getPathInfo();
+                    $ctx['method'] = (string)$request->getMethod();
 
-                // Persist structured event for correlation (quote_id/masked_id/etc)
-                $this->eventWriter->write('dispatch_exception', $ctx + [
-                    'exception_class' => get_class($e),
-                    'message'         => $e->getMessage(),
-                ]);
+                    $this->eventWriter->write('dispatch_exception', $ctx);
 
-                // Also log full exception
-                $this->logger->critical('[CheckoutProbe] Unhandled exception during dispatch', [
-                    'exception' => $e,
-                    'path_info' => $request->getPathInfo(),
-                    'method'    => $request->getMethod(),
-                    'probe'     => $ctx,
-                ]);
+                    $this->logger->critical('[CheckoutProbe] Unhandled exception during dispatch', [
+                        'exception' => $e,
+                        'probe' => $ctx,
+                    ]);
+                } catch (\Throwable $ignored) {
+                }
             }
 
             throw $e;
@@ -76,5 +81,12 @@ class FrontControllerExceptionLogger
         }
 
         return $this->response;
+    }
+
+    private function shouldProbePath(string $path): bool
+    {
+        return str_contains($path, '/checkout')
+            || str_contains($path, '/klarna')
+            || str_contains($path, '/amcookie');
     }
 }
